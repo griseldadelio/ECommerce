@@ -4,7 +4,7 @@ import NextLink from 'next/link';
 import {
   CssBaseline,
   ThemeProvider,
-  createMuiTheme,
+  createTheme,
   AppBar,
   Toolbar,
   Box,
@@ -14,8 +14,9 @@ import {
   Container,
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
+import useStyles from '../utils/style';
 
-const theme = createMuiTheme({
+const theme = createTheme({
   typography: {
     h1: {
       fontSize: '1.6rem',
@@ -32,17 +33,34 @@ const theme = createMuiTheme({
 });
 
 const Layout = ({ children }) => {
+  const classes = useStyles();
   return (
     <>
       <Head>
         <title>MG Shop</title>
       </Head>
-      <AppBar position="static">
+      <AppBar position="static" className={classes.navbar}>
         <Toolbar>
-          <Typography>MG Shop</Typography>
+          <NextLink href="/" passHref>
+            <Link>
+              <Typography className={classes.brand}>MG Shop </Typography>
+            </Link>
+          </NextLink>
+          <div className={classes.grow}></div>
+          <div>
+            <NextLink href="/cart" passref>
+              <Link>Cart</Link>
+            </NextLink>
+            <NextLink href="/login" passref>
+              <Link>Login</Link>
+            </NextLink>
+          </div>
         </Toolbar>
       </AppBar>
-      <Container>{children}</Container>
+      <Container className={classes.main}>{children}</Container>
+      <footer className={classes.footer}>
+        <Typography>All rights reserved MG Shop</Typography>
+      </footer>
     </>
   );
 };

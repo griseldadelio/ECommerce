@@ -1,6 +1,18 @@
-import Head from 'next/head';
 import Layout from '../components/Layout';
-import { Typography } from '@material-ui/core';
+import { Head, Image } from 'next';
+import {
+  Typography,
+  Grid,
+  Card,
+  CardActionArea,
+  CardMedia,
+  CardContent,
+  Button,
+  CardActions,
+} from '@material-ui/core';
+import NextLink from 'next/link';
+import data from '../utils/data';
+
 const Home = () => {
   return (
     <>
@@ -10,16 +22,36 @@ const Home = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>*/}
       <Layout>
-        <h1>Products</h1>
-        <ul>
-          <li>Product 1</li>
-          <li>Product 2</li>
-          <li>Product 3</li>
-        </ul>
+        <div>
+          <h1>Products</h1>
+          <Grid container spacing={3}>
+            {data.products.map((product) => (
+              <Grid item md={4} key={product.name}>
+                <Card>
+                  <NextLink href={`/product/${product.slug}`} passHref>
+                    <CardActionArea>
+                      <CardMedia
+                        component="img"
+                        image={product.image}
+                        title={product.title}
+                      ></CardMedia>
+                      <CardContent>
+                        <Typography>{product.name}</Typography>
+                      </CardContent>
+                    </CardActionArea>
+                  </NextLink>
+                  <CardActions>
+                    <Typography>${product.price} </Typography>
+                    <Button size="small" color="primary">
+                      Add to cart
+                    </Button>
+                  </CardActions>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </div>
       </Layout>
-      <footer>
-        <Typography>All rights reserved MG Shop</Typography>
-      </footer>
     </>
   );
 };
